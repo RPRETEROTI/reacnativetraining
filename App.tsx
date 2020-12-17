@@ -1,21 +1,31 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-
+import React from "react";
+import {
+  FlatList,
+  StyleSheet,
+  View,
+  Text,
+  Button,
+  TextInput,
+  SafeAreaView,
+} from "react-native";
+import { Item } from "./components/Item";
+import { ItemInput } from "./components/ItemInput";
+import { COMICS } from "./screens/models/Comics";
+import { MealsNavigator } from "./screens/navigation/MealsNavigator";
+import { ComicsMainNavigator } from "./screens/navigation/navigationComics/ComicsNavigator";
+import { ComicsShopScreen } from "./screens/navigation/screenComics/ComicsShop";
+import { StartScreen } from "./screens/StartScreen";
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+  return <ComicsMainNavigator />;
+  // <MealsNavigator />;
 }
 
 const styles = StyleSheet.create({
   container: {
+    margin: "30px",
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    //backgroundColor: "orange",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
