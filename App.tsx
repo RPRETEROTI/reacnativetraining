@@ -6,25 +6,29 @@ import {
   Text,
   Button,
   TextInput,
-  SafeAreaView,
 } from "react-native";
-import { Item } from "./components/Item";
-import { ItemInput } from "./components/ItemInput";
-import { COMICS } from "./screens/models/Comics";
-import { MealsNavigator } from "./screens/navigation/MealsNavigator";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Provider } from "react-redux";
 import { ComicsMainNavigator } from "./screens/navigation/navigationComics/ComicsNavigator";
-import { ComicsShopScreen } from "./screens/navigation/screenComics/ComicsShop";
-import { StartScreen } from "./screens/StartScreen";
+
+import { NavigationContainer } from "./screens/navigation/NavigationContainer";
+import { store } from "./store/store";
+
 export default function App() {
-  return <ComicsMainNavigator />;
-  // <MealsNavigator />;
+  return (
+    <Provider store={store}>
+      <NavigationContainer />
+    </Provider>
+    // <Provider store={store}>
+    //   <ComicsMainNavigator />
+    // </Provider>
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
     margin: "30px",
     flex: 1,
-    //backgroundColor: "orange",
     alignItems: "center",
     justifyContent: "center",
   },

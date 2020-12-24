@@ -30,8 +30,10 @@ import {
   StackNavigationOptions,
   StackNavigationProp,
 } from "react-navigation-stack/lib/typescript/src/vendor/types";
+import { useDispatch, useSelector } from "react-redux";
 import { Comic } from "../../../components_Comics/Comic";
 import { HeaderComicsCustomButton } from "../../../components_Comics/HeaderCustomButton";
+import { RootState, store } from "../../../store/store";
 import { COMICS, ComicsType } from "../../models/Comics";
 
 //ask passing data from parent intop navigator typescritp
@@ -50,21 +52,32 @@ import { COMICS, ComicsType } from "../../models/Comics";
 export const ComicsShopScreen: NavigationStackScreenComponent = ({
   ...props
 }) => {
+  const comicstate = store.getState();
+  const favourites = useSelector((state: RootState) => {
+    return state.shop.preferiti;
+  });
+  const toggleFavourite = (idComic: number): boolean => {
+    return !!favourites.find((fv: any) => fv.id === idComic);
+  };
+  console.log("fav", favourites);
+  console.log("toggleFavourite", toggleFavourite);
+
+  console.log("comicstate", comicstate);
   const renderItem = (itemData: any): any => (
-    <View style={styles.item}>
-      <Comic
-        comic={itemData.item}
-        onPress={(type) => {
-          type !== "buy"
-            ? props.navigation.navigate("ComicsDetail", {
-                comic: itemData.item,
-              })
-            : props.navigation.navigate("Carrello", {
-                comic: itemData.item,
-              });
-        }}
-      />
-    </View>
+    <Comic
+      comic={itemData.item}
+      onPress={(type) => {
+        type !== "buy"
+          ? props.navigation.navigate("ComicsDetail", {
+              comic: itemData.item,
+              isFavourite: toggleFavourite(itemData.item.id),
+              isClicked: false,
+            })
+          : props.navigation.navigate("Carrello", {
+              comic: itemData.item,
+            });
+      }}
+    />
   );
   const width = Dimensions.get("window").width;
   const height = Dimensions.get("window").height;
@@ -73,8 +86,7 @@ export const ComicsShopScreen: NavigationStackScreenComponent = ({
 
   console.log("props", props.children);
   return (
-    <View style={{ flex: 1, paddingTop: 20 }}>
-      {/* <SafeAreaView> */}
+    <View style={styles.container}>
       <View
         style={{
           display: "flex",
@@ -88,11 +100,9 @@ export const ComicsShopScreen: NavigationStackScreenComponent = ({
       <FlatList
         data={COMICS}
         numColumns={2}
-        keyExtractor={(item, index) => item.id as any}
+        keyExtractor={(item) => item.id as any}
         renderItem={renderItem}
-        contentContainerStyle={styles.container}
       />
-      {/* </SafeAreaView> */}
     </View>
   );
 };
@@ -112,28 +122,22 @@ ComicsShopScreen.navigationOptions = (navData): StackHeaderOptions => {
     ),
   };
 };
-const sizeH = 60;
-const sizeW = 170;
+const sizeH = 560;
+const sizeW = 370;
+const unit = 50;
 const styles = StyleSheet.create({
   container: {
-    // margin: 10,
-    //marginTop: 60,
     flex: 1,
-    alignItems: "center",
+    alignItems: "stretch",
     justifyContent: "center",
     display: "flex",
     paddingVertical: 10,
     paddingHorizontal: 10,
-    // backgroundColor: "red",
-  },
-  item: {
-    display: "flex",
-    justifyContent: "space-between",
-    width: "50%",
-    height: "50%",
-    marginBottom: "20%",
-    // PixelRatio.roundToNearestPixel(sizeW),
-    // height: PixelRatio.roundToNearestPixel(sizeH),
+    // width: PixelRatio.roundToNearestPixel(sizeW),
+    //height: PixelRatio.roundToNearestPixel(sizeH),
+    // borderColor: "grey",
+    // borderStyle: "solid",
+    // borderWidth: 3,
   },
   title: {
     fontWeight: "bold",
@@ -143,7 +147,4 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     textTransform: "uppercase",
   },
-  // titlemain: {
-  //   marginBottom: 80,
-  // },
 });

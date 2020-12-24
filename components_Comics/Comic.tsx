@@ -24,20 +24,13 @@ export const Comic: React.FC<Comic> = ({ comic, ...props }) => {
       <View style={styles.containerImg}>
         <Image style={styles.img} source={{ uri: comic.coverImg }} />
       </View>
-      <View
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
+      <View style={styles.contentcontainer}>
         <View style={{ display: "flex", justifyContent: "center" }}>
           <Text style={styles.title}>{comic.title}</Text>
         </View>
-
-        <Text style={styles.price}>
-          <Text style={styles.name}>Prezzo:</Text> {comic.price}
-        </Text>
+        <View style={styles.price}>
+          <Text style={styles.name}>Prezzo: {comic.price}</Text>
+        </View>
       </View>
       <View style={styles.containerBtn}>
         <TouchableHighlight
@@ -56,59 +49,69 @@ export const Comic: React.FC<Comic> = ({ comic, ...props }) => {
     </View>
   );
 };
-const padding = 15;
+const padding = 10;
+const margin = 10;
 const styles = StyleSheet.create({
   start: {
-    //width: 150,
-    height: "auto",
+    flex: 1,
     display: "flex",
     flexDirection: "column",
-    marginBottom: 10,
-    marginTop: 30,
-    // borderStyle: "solid",
-    // borderWidth: 2,
-    // borderColor: "red",
-    padding: 10,
+    marginBottom: 15,
+    marginTop: 20,
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: 5,
+  },
+  contentcontainer: {
+    display: "flex",
+    flex: 1,
+    //padding: PixelRatio.roundToNearestPixel(padding),
+    marginTop: 5,
+    justifyContent: "center",
+    alignItems: "center",
   },
   containerImg: {
     display: "flex",
+    width: "100%",
+    height: 250,
     alignItems: "center",
     margin: 3,
-    marginBottom: 1,
-    // borderStyle: "solid",
-    // borderWidth: 2,
-    // borderColor: "yellow",
+    marginBottom: PixelRatio.roundToNearestPixel(margin),
   },
   img: {
     width: "100%",
-    height: "90%",
+    height: "100%",
   },
   title: {
     display: "flex",
     justifyContent: "center",
+    alignItems: "center",
     fontWeight: "bold",
-    padding: PixelRatio.roundToNearestPixel(padding),
+    fontSize: 18,
+    //padding: PixelRatio.roundToNearestPixel(padding),
     paddingTop: 0,
   },
   price: {
     display: "flex",
-    justifyContent: "flex-end",
+    //margin: PixelRatio.roundToNearestPixel(padding),
+    padding: 10,
+    marginVertical: 10,
     backgroundColor: "black",
     color: "white",
-    width: "100%",
+    width: 150,
   },
   name: {
     display: "flex",
+    color: "white",
   },
   btn: {
-    borderRadius: 40,
+    borderRadius: 10,
     backgroundColor: "black",
     justifyContent: "center",
     display: "flex",
     padding: 15,
+    paddingHorizontal: 30,
     marginVertical: 3,
-    // paddingBottom: 9,
-    //width: 50,
   },
   containerBtn: {
     display: "flex",
