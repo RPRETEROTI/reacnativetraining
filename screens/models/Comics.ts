@@ -1,20 +1,4 @@
 
-
-// export class Comics {
-//     id: string;
-//     title: string;
-//     coverImg: string;
-//     price: number;
-//     description: string;
-//     constructor(id: string, title: string, coverImg: string, price: number, description: string) {
-//         this.id = id;
-//         this.title = title;
-//         this.coverImg = coverImg;
-//         this.price = price;
-//         this.description = description;
-//     }
-// }
-
 export type ComicsType = Comics[];
 export type ComicType = Comics;
 

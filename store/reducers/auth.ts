@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { BUY, TOGGLEPREFERITES } from "../types/types";
+import { BUY, LOGIN, LOGOUT, TOGGLEPREFERITES } from "../types/types";
 
 const initialState: any = {
     acquisti: [],
@@ -9,11 +9,14 @@ const initialState: any = {
 export default (state = _.cloneDeep(initialState), action: any) => {
     const newState = { ...state }
     switch (action.type) {
-        case BUY: newState.acquisti.push({
+        case LOGIN: newState.acquisti.push({
             comic: action.payload.comic
         });
             return newState;
-
+        case LOGOUT: newState.acquisti.push({
+            comic: action.payload.comic
+        });
+            return newState;
         default:
             return state
     }

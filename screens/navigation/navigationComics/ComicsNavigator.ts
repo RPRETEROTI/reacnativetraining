@@ -13,8 +13,9 @@ import { FavoutitesScreen } from '../screenComics/FavouritesComics';
 // import { SafeAreaView } from "react-native";
 import { Button, View } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
-import { DrawerContainer, NavigationContainer } from '../DrawerContainer';
+import { DrawerContainer } from '../DrawerContainer';
 import React from 'react';
+import { StartScreen } from '../screenComics/Login';
 
 
 export const defaultOptions = {
@@ -85,6 +86,14 @@ export const CarrelloNavigator = createStackNavigator(
     }, { defaultNavigationOptions: defaultOptions }
 );
 
+export const AuthenticationNavigator = createStackNavigator(
+    {
+        StartScreen: {
+            screen: StartScreen, navigationOptions: {}
+        },
+    }, { defaultNavigationOptions: defaultOptions }
+);
+
 
 export const sideNavigatorAdmin = createDrawerNavigator({
     ViewSold: ComicsAdminSellingNavigator,
@@ -100,8 +109,6 @@ export const sideNavigatorUser = createDrawerNavigator({
         contentComponent: DrawerContainer
     }
 )
-
-
 
 
 const isAdmin = false
