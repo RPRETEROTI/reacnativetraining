@@ -1,22 +1,27 @@
 import _ from "lodash";
-import { BUY, LOGIN, LOGOUT, TOGGLEPREFERITES } from "../types/types";
+import { AUTHENTICATE, LOGIN, LOGOUT, SIGNUP } from "../types/types";
 
 const initialState: any = {
-    acquisti: [],
-    preferiti: [],
-    //isFavourite: false
+    token: "",
+    userId: "",
+    // email: ""
 }
 export default (state = _.cloneDeep(initialState), action: any) => {
     const newState = { ...state }
     switch (action.type) {
-        case LOGIN: newState.acquisti.push({
-            comic: action.payload.comic
-        });
+        case AUTHENTICATE:
+            newState.token += action.payload.token;
+            newState.userId += action.payload.userId;
             return newState;
-        case LOGOUT: newState.acquisti.push({
-            comic: action.payload.comic
-        });
-            return newState;
+        // case LOGIN:
+        //     newState.email += action.payload.email;
+        //     return newState;
+        // case SIGNUP:
+        //     newState.email += action.payload.email;
+        //     return newState;
+        case LOGOUT:
+            return initialState;
+
         default:
             return state
     }

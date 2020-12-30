@@ -1,11 +1,12 @@
 import _ from "lodash";
-import { ComicsType, ComicType } from "../../screens/models/Comics";
+import { COMICS, ComicsType, ComicType } from "../../screens/models/Comics";
 import { ComicShopType } from "../../screens/models/ComicShop";
-import { BUY, TOGGLEPREFERITES } from "../types/types";
+import { BUY, EDITASYNCHCOMICTHUNK, TOGGLEPREFERITES } from "../types/types";
 
 const initialState: ComicShopType = {
     acquisti: [{ id: 2 }],
     preferiti: [{ id: 0 }],
+    fumettidisponibili: COMICS
     //isFavourite: false
 }
 export default (state = _.cloneDeep(initialState), action: any) => {
@@ -28,6 +29,9 @@ export default (state = _.cloneDeep(initialState), action: any) => {
             console.log('isfas', isFavourite)
             isFavourite ? removeComic() : addComic();
             console.log('newStatefv', newState.preferiti)
+            return newState;
+        case EDITASYNCHCOMICTHUNK: newState.fumettidisponibili.push(action.payload.comicedited);
+            console.log('ns', newState)
             return newState;
         default:
             return state

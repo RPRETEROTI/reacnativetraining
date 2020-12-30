@@ -5,8 +5,8 @@ import shop from "./reducers/shop"
 import auth from "./reducers/auth"
 
 const rootReducer = combineReducers({ shop, auth })
-const enhancer = compose(applyMiddleware(thunk))
-const store = createStore(rootReducer, enhancer)
+const store = createStore(rootReducer, applyMiddleware(thunk))
+console.log('store', store.getState())
 export type RootState = ReturnType<typeof store.getState>;
 // export type AppThunk<ReturnType = void> = ThunkAction<
 //   ReturnType,
