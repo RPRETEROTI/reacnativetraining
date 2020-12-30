@@ -7,18 +7,20 @@ import {
   DrawerContentComponentProps,
   DrawerItems,
 } from "react-navigation-drawer";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../store/actions/auth";
+import { RootState } from "../../store/store";
 
 export const DrawerContainer: React.FC<DrawerContentComponentProps> = ({
   ...props
 }) => {
+  const dispatch = useDispatch();
+  const isAuth = useSelector((state: RootState) => !!state.auth.token);
+  console.log("isauthout", isAuth);
   return (
     <SafeAreaView style={{ paddingTop: 10, flex: 1 }}>
       <DrawerItems {...props} />
-      <Button
-        title="Logout"
-        color="red"
-        onPress={() => console.log("logout")}
-      />
+      <Button title="Logout" color="red" onPress={() => dispatch(logout)} />
     </SafeAreaView>
   );
 };

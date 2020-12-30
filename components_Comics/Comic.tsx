@@ -42,8 +42,17 @@ export const Comic: React.FC<Comic> = ({ comic, ...props }) => {
           </View>
         </TouchableHighlight>
 
-        <TouchableOpacity style={styles.btn} onPress={() => props.onPress("")}>
+        <TouchableOpacity
+          style={styles.btn}
+          onPress={() => props.onPress("details")}
+        >
           <Text style={styles.text}>Dettagli</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.btn}
+          onPress={() => props.onPress("edit")}
+        >
+          <Text style={styles.text}>Edit</Text>
         </TouchableOpacity>
       </View>
     </View>

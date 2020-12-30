@@ -33,6 +33,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { Comic } from "../../../components_Comics/Comic";
 import { HeaderComicsCustomButton } from "../../../components_Comics/HeaderCustomButton";
+import { editComics } from "../../../store/actions/shop";
 import { RootState, store } from "../../../store/store";
 import { COMICS, ComicsType } from "../../models/Comics";
 
@@ -61,21 +62,29 @@ export const ComicsShopScreen: NavigationStackScreenComponent = ({
   };
   console.log("fav", favourites);
   console.log("toggleFavourite", toggleFavourite);
-
+  const dispatch = useDispatch();
   console.log("comicstate", comicstate);
   const renderItem = (itemData: any): any => (
     <Comic
       comic={itemData.item}
       onPress={(type) => {
-        type !== "buy"
+        type === "details"
           ? props.navigation.navigate("ComicsDetail", {
               comic: itemData.item,
               isFavourite: toggleFavourite(itemData.item.id),
               isClicked: false,
             })
-          : props.navigation.navigate("Carrello", {
+          : type === "edit"
+          ? props.navigation.navigate("EditComicsDetail", {
               comic: itemData.item,
-            });
+              isClicked: false,
+              hasSubmitted: false,
+            })
+          : dispatch(editComics(itemData.item));
+
+        // props.navigation.navigate("Carrello", {
+        //     comic: itemData.item,
+        //   });
       }}
     />
   );

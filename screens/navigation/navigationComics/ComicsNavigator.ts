@@ -1,4 +1,4 @@
-import { createAppContainer } from 'react-navigation'
+import { createAppContainer, createSwitchNavigator } from 'react-navigation'
 import { createStackNavigator } from 'react-navigation-stack'
 import { createBottomTabNavigator } from 'react-navigation-tabs'
 import { Ionicons } from "@expo/vector-icons";
@@ -15,7 +15,8 @@ import { Button, View } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import { DrawerContainer } from '../DrawerContainer';
 import React from 'react';
-import { StartScreen } from '../screenComics/Login';
+import { AuthScreen } from '../screenComics/Auth';
+import { FirstScreen } from '../screenComics/FirstScreen';
 
 
 export const defaultOptions = {
@@ -88,8 +89,8 @@ export const CarrelloNavigator = createStackNavigator(
 
 export const AuthenticationNavigator = createStackNavigator(
     {
-        StartScreen: {
-            screen: StartScreen, navigationOptions: {}
+        Auth: {
+            screen: AuthScreen, navigationOptions: {}
         },
     }, { defaultNavigationOptions: defaultOptions }
 );
@@ -98,6 +99,8 @@ export const AuthenticationNavigator = createStackNavigator(
 export const sideNavigatorAdmin = createDrawerNavigator({
     ViewSold: ComicsAdminSellingNavigator,
     EditProduct: EditComicsNavigator
+}, {
+    contentComponent: DrawerContainer
 })
 export const sideNavigatorUser = createDrawerNavigator({
     Home: ComicsUserNavigator,
@@ -110,8 +113,16 @@ export const sideNavigatorUser = createDrawerNavigator({
     }
 )
 
+export const mainNavigator = createSwitchNavigator(
+    {
+        Startscreen: FirstScreen,
+        AuthenticationPage: AuthenticationNavigator,
+        UserMenu: sideNavigatorUser,
+        AdminMenu: sideNavigatorAdmin
+    }
+)
 
-const isAdmin = false
-const ComicsNavigator = isAdmin ? sideNavigatorAdmin : sideNavigatorUser
+// const isAdmin = false
+// const ComicsNavigator = isAdmin ? sideNavigatorAdmin : sideNavigatorUser
 
-export const ComicsMainNavigator = createAppContainer(ComicsNavigator)
+export const ComicsMainNavigator = createAppContainer(mainNavigator)
