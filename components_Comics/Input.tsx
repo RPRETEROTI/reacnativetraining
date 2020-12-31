@@ -4,7 +4,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { CHANGEINPUT, BLURINPUT } from "../store/types/types";
 import { blurInput, changeInput } from "../store/actions/shop";
 
-export const Input: React.FC<any> = (props) => {
+export const Input = (props: any) => {
   const { label, id, onInputChange } = props;
 
   const inputReducer = (state: any, action: any) => {
@@ -58,9 +58,7 @@ export const Input: React.FC<any> = (props) => {
         onChangeText={textChangehandler}
         style={styles.input}
         onBlur={willLoseFocus}
-      >
-        <Text style={styles.descript}></Text>
-      </TextInput>
+      ></TextInput>
     </View>
   );
 };

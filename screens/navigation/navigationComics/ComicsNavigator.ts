@@ -17,6 +17,7 @@ import { DrawerContainer } from '../DrawerContainer';
 import React from 'react';
 import { AuthScreen } from '../screenComics/Auth';
 import { FirstScreen } from '../screenComics/FirstScreen';
+import { FtresDveScreen } from '../screenComics/DeviceFeatures';
 
 
 export const defaultOptions = {
@@ -96,6 +97,14 @@ export const AuthenticationNavigator = createStackNavigator(
 );
 
 
+export const DeviceFeaturesNavigator = createStackNavigator(
+    {
+        FeaturesDve: {
+            screen: FtresDveScreen, navigationOptions: {}
+        },
+    }, { defaultNavigationOptions: defaultOptions }
+);
+
 export const sideNavigatorAdmin = createDrawerNavigator({
     ViewSold: ComicsAdminSellingNavigator,
     EditProduct: EditComicsNavigator
@@ -106,7 +115,8 @@ export const sideNavigatorUser = createDrawerNavigator({
     Home: ComicsUserNavigator,
     Favourites: FavouritesNavigator,
     Acquisti: ComicsBoughtUserNavigator,
-    Carrello: CarrelloNavigator
+    Carrello: CarrelloNavigator,
+    TestFeaturesDevice: DeviceFeaturesNavigator
 },
     {
         contentComponent: DrawerContainer
