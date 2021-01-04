@@ -22,13 +22,14 @@ import { Input } from "../../../components_Comics/Input";
 import { FORMEDITPRODUCT } from "../../../store/types/types";
 import { formReducer } from "../../../utilities/formReducer";
 
-export const ComicsDetailScreen: NavigationStackScreenComponent = ({
-  ...props
-}) => {
-  const { navigation } = props;
+export const ComicsDetailScreen = ({ ...props }) => {
+  const { navigation, route } = props;
   console.log("nav", navigation);
-  const comic = navigation.getParam("comic");
-  const hasClicked = navigation.getParam("isClicked");
+  // const comic = navigation.getParam("comic");
+  const comic = route.params?.comic;
+  // const hasClicked = navigation.getParam("isClicked");
+  const hasClicked = route.params?.isClicked;
+
   // const isSubmittedComic = navigation.getParam("hasSubmitted");
 
   console.log("hasClicked", hasClicked);
@@ -76,16 +77,32 @@ export const ComicsDetailScreen: NavigationStackScreenComponent = ({
         console.log("err", err);
       }
     }
-  }, [dispatch, hasClicked]);
+  }, [dispatch, formState]);
 
+  // useEffect(() => {
+  //   hasClicked
+  //     ? (navigation.setParams({
+  //         submitedition: submitHandler(),
+  //         isClicked: false,
+  //       }),
+  //       console.log("cetrioli"))
+  //     : console.log("banane");
+  // }, [submitHandler]);
   useEffect(() => {
-    hasClicked
-      ? (navigation.setParams({
-          submitedition: submitHandler(),
-          isClicked: false,
-        }),
-        console.log("cetrioli"))
-      : console.log("banane");
+    navigation.setOptions({
+      headerRight: () => (
+        <HeaderButtons HeaderButtonComponent={HeaderComicsCustomButton}>
+          <Item
+            title="Edit"
+            iconName="md-save"
+            onPress={() => {
+              //  hasClicked=true
+              submitHandler();
+            }}
+          />
+        </HeaderButtons>
+      ),
+    });
   }, [submitHandler]);
 
   return (
@@ -176,26 +193,28 @@ export const ComicsDetailScreen: NavigationStackScreenComponent = ({
   );
 };
 
-ComicsDetailScreen.navigationOptions = (navData): StackHeaderOptions => {
+export const detailComicAdminScreenOptions = (
+  navData: any
+): StackHeaderOptions => {
   // const isSubmitted = navData.navigation.getParam("hasSubmitted");
   // console.log("isSubmittednav", isSubmitted);
   return {
     headerTitle: "Aggiorna le info del fumetto",
-    headerRight: () => (
-      <HeaderButtons HeaderButtonComponent={HeaderComicsCustomButton}>
-        <Item
-          title="Edit"
-          iconName="md-save"
-          onPress={() => {
-            navData.navigation.setParams({
-              isClicked: true,
-              // isSubmitted: !isSubmitted,
-            });
-            navData.navigation.getParam("submitedition");
-          }}
-        />
-      </HeaderButtons>
-    ),
+    // headerRight: () => (
+    //   <HeaderButtons HeaderButtonComponent={HeaderComicsCustomButton}>
+    //     <Item
+    //       title="Edit"
+    //       iconName="md-save"
+    //       onPress={() => {
+    //         navData.navigation.setParams({
+    //           isClicked: true,
+    //           // isSubmitted: !isSubmitted,
+    //         });
+    //         navData.navigation.getParam("submitedition");
+    //       }}
+    //     />
+    //   </HeaderButtons>
+    // ),
   };
 };
 const styles = StyleSheet.create({

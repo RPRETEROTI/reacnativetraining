@@ -50,9 +50,7 @@ import { COMICS, ComicsType } from "../../models/Comics";
 //   >;
 //   export type ComicsShop2 = ComicsProps &
 //   NavigationStackScreenProps;
-export const ComicsShopScreen: NavigationStackScreenComponent = ({
-  ...props
-}) => {
+export const ComicsShopScreen = ({ ...props }) => {
   const comicstate = store.getState();
   const favourites = useSelector((state: RootState) => {
     return state.shop.preferiti;
@@ -115,7 +113,7 @@ export const ComicsShopScreen: NavigationStackScreenComponent = ({
     </View>
   );
 };
-ComicsShopScreen.navigationOptions = (navData): StackHeaderOptions => {
+export const comicShopScreenOptions = (navData: any): StackHeaderOptions => {
   return {
     headerTitle: "Comics Categories",
     headerRight: () => (
@@ -131,6 +129,7 @@ ComicsShopScreen.navigationOptions = (navData): StackHeaderOptions => {
     ),
   };
 };
+
 const sizeH = 560;
 const sizeW = 370;
 const unit = 50;

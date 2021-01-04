@@ -1,7 +1,11 @@
+import { StackHeaderOptions } from "@react-navigation/stack/lib/typescript/src/types";
 import React from "react";
 import { StyleSheet, View, Text } from "react-native";
+import { NavigationStackScreenComponent } from "react-navigation-stack/lib/typescript/src/types";
 
-export const CarrelloScreen = (props: any) => {
+export const CarrelloScreen: NavigationStackScreenComponent = ({
+  ...props
+}) => {
   return (
     <View style={styles.start}>
       <Text>Carrello</Text>
@@ -9,8 +13,8 @@ export const CarrelloScreen = (props: any) => {
   );
 };
 
-CarrelloScreen.navigationOptions = {
-  headerTitle: "Carrello",
+export const carrelloScreenOptions = (navData: any): StackHeaderOptions => {
+  return { headerTitle: "Carrello" };
 };
 const styles = StyleSheet.create({
   start: {

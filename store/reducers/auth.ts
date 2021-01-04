@@ -1,10 +1,11 @@
 import _ from "lodash";
-import { AUTHENTICATE, LOGIN, LOGOUT, SIGNUP } from "../types/types";
+import { AUTHENTICATE, LOGIN, LOGOUT, RESETSTART, SIGNUP } from "../types/types";
 
 const initialState: any = {
     token: "",
     userId: "",
-    // email: ""
+    startState: false,
+    email: ""
 }
 export default (state = _.cloneDeep(initialState), action: any) => {
     const newState = { ...state }
@@ -12,7 +13,12 @@ export default (state = _.cloneDeep(initialState), action: any) => {
         case AUTHENTICATE:
             newState.token += action.payload.token;
             newState.userId += action.payload.userId;
+            newState.email += action.payload.email;
             return newState;
+        case RESETSTART:
+            newState.startState = true;
+            return newState;
+
         // case LOGIN:
         //     newState.email += action.payload.email;
         //     return newState;

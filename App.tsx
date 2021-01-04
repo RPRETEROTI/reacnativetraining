@@ -9,15 +9,13 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Provider } from "react-redux";
-import { ComicsMainNavigator } from "./screens/navigation/navigationComics/ComicsNavigator";
-
-import { NavigationContainer } from "./screens/navigation/NavigationContainer";
+import { AppNavigationContainer } from "./screens/navigation/AppNavigationContainer";
 import { store } from "./store/store";
 
 export default function App() {
   return (
     <Provider store={store}>
-      <NavigationContainer />
+      <AppNavigationContainer />
     </Provider>
     // <Provider store={store}>
     //   <ComicsMainNavigator />

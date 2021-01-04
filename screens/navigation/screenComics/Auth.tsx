@@ -1,3 +1,4 @@
+import { StackHeaderOptions } from "@react-navigation/stack/lib/typescript/src/types";
 import React, { useCallback, useReducer } from "react";
 import {
   StyleSheet,
@@ -57,7 +58,7 @@ export const AuthScreen: NavigationStackScreenComponent = ({ ...props }) => {
       } else {
         await dispatch(signupAsynch(formState.inputs));
       }
-      navigation.navigate("Home");
+      // navigation.navigate("Home");
     } catch (err) {
       {
         console.log("err", err);
@@ -132,8 +133,10 @@ export const AuthScreen: NavigationStackScreenComponent = ({ ...props }) => {
   );
 };
 
-AuthScreen.navigationOptions = {
-  headerTitle: "Authenticate",
+export const authScreenOptions = (navData: any): StackHeaderOptions => {
+  return {
+    headerTitle: "Authenticate",
+  };
 };
 const styles = StyleSheet.create({
   start: {

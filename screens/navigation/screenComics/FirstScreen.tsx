@@ -3,10 +3,10 @@ import React, { useEffect } from "react";
 import { StyleSheet, View, Text, ActivityIndicator } from "react-native";
 import { NavigationStackScreenComponent } from "react-navigation-stack";
 import { useDispatch, useSelector } from "react-redux";
-import { authenticate } from "../../../store/actions/auth";
+import { authenticate, resetStartAppState } from "../../../store/actions/auth";
 import { RootState } from "../../../store/store";
 
-export const FirstScreen: NavigationStackScreenComponent = ({ ...props }) => {
+export const FirstScreen = (props: any) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -14,7 +14,13 @@ export const FirstScreen: NavigationStackScreenComponent = ({ ...props }) => {
 
     const testLogin = async () => {
       const userData = await AsyncStorage.getItem("userData");
+      if (!userData) {
+        dispatch(resetStartAppState());
+        // navigation.navigate("Auth");
+        return;
+      }
       const newUserData = userData ? JSON.parse(userData) : "";
+
       const { token, expirationDate, userId } = newUserData;
       // const email = useSelector((state: RootState) => state.auth.email);
       const actualExpDate = new Date(expirationDate);
@@ -27,16 +33,14 @@ export const FirstScreen: NavigationStackScreenComponent = ({ ...props }) => {
       //     navigation.navigate("AdminMenu");
       //   }
       // }
-      if (!userData) {
-        navigation.navigate("Auth");
-        return;
-      }
+
       if (actualExpDate < new Date() || !token || !userId) {
-        navigation.navigate("Auth");
+        // navigation.navigate("Auth");
+        dispatch(resetStartAppState());
         return;
       }
       const remainingTime = actualExpDate.getTime() - new Date().getTime();
-      navigation.navigate("UserMenu");
+      // navigation.navigate("UserMenu");
       dispatch(authenticate(token, userId, remainingTime));
     };
     testLogin();

@@ -2,7 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Dispatch } from "react";
 import { useDispatch } from "react-redux";
 import { AuthenticationType } from "../../screens/models/Authentication";
-import { AUTHENTICATE, FORMEDITPRODUCT, LOGIN, LOGOUT, SIGNUP } from "../types/types";
+import { AUTHENTICATE, FORMEDITPRODUCT, LOGIN, LOGOUT, RESETSTART, SIGNUP } from "../types/types";
 
 // export const login = (credentials: AuthenticationType) => ({
 //     type: LOGIN,
@@ -34,7 +34,7 @@ const clearLogoutTimer = () => {
 //         }, expirationTime);
 //     };
 // };
-export const authenticate = (token: any, userId: any, expireTime: number) => {
+export const authenticate = (token: any, userId: any, expireTime: number, email: any) => {
 
     return (dispatch: Dispatch<any>) => {
         // dispatch((setLogoutTimer(expireTime)));
@@ -42,13 +42,19 @@ export const authenticate = (token: any, userId: any, expireTime: number) => {
             type: AUTHENTICATE,
             payload: {
                 token: token,
-                userId: userId
+                userId: userId,
+                email: email
             }
         })
     }
 }
 
-
+export const resetStartAppState = () => {
+    console.log('cane')
+    return (dispatch: Dispatch<any>) => {
+        dispatch({ type: RESETSTART })
+    }
+}
 export const validateCredentials = (inputId: string, inputValue: string, isValid: boolean) => ({
     type: FORMEDITPRODUCT,
     payload: {
@@ -103,7 +109,7 @@ export const signupAsynch = (credentials: AuthenticationType) => {
             );
             saveDataToStorage(resData.idToken, resData.localId, expirationDate)
             // dispatch(signup(resData));
-            dispatch(authenticate(resData.idToken, resData.localId, parseInt(resData.expiresIn) * 1000))
+            dispatch(authenticate(resData.idToken, resData.localId, parseInt(resData.expiresIn) * 1000, resData.email))
         }
         catch (err) {
             console.log('the winner is', err)
@@ -134,7 +140,7 @@ export const loginAsynch = (credentials: AuthenticationType) => {
             );
             saveDataToStorage(resData.idToken, resData.localId, expirationDate)
             // dispatch(login(resData));
-            dispatch(authenticate(resData.idToken, resData.localId, parseInt(resData.expiresIn) * 1000))
+            dispatch(authenticate(resData.idToken, resData.localId, parseInt(resData.expiresIn) * 1000, resData.email))
 
         }
         catch (err) {

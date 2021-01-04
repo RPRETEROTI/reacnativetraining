@@ -10,14 +10,17 @@ import { HeaderComicsCustomButton } from "../../../components_Comics/HeaderCusto
 import { togglePreferites } from "../../../store/actions/shop";
 import { store } from "../../../store/store";
 
-export const ComicsDetailScreen: NavigationStackScreenComponent = ({
-  ...props
-}) => {
-  const { navigation } = props;
+export const ComicsDetailScreen = ({ ...props }) => {
+  const { navigation, route } = props;
   console.log("nav", navigation);
-  const comic = navigation.getParam("comic");
-  const isFavouriteComic = navigation.getParam("isFavourite");
-  const hasClicked = navigation.getParam("isClicked");
+  // const comic = navigation.getParam("comic");
+  // const isFavouriteComic = navigation.getParam("isFavourite");
+  // const hasClicked = navigation.getParam("isClicked");
+  const comic = route.params?.comic;
+  // const hasClicked = navigation.getParam("isClicked");
+  const hasClicked = route.params?.isClicked;
+  const isFavouriteComic = route.params?.isFavourite;
+  const [isFav, setIsFav] = React.useState(isFavouriteComic);
   console.log("hasClicked", hasClicked);
 
   console.log("isf", isFavouriteComic);
@@ -30,14 +33,40 @@ export const ComicsDetailScreen: NavigationStackScreenComponent = ({
     dispatch(togglePreferites(comic));
   }, [isFavouriteComic]);
 
+  // useEffect(() => {
+  //   console.log("banane");
+  //   hasClicked
+  //     ? navigation.setParams({
+  //         toggleFavourite: toggleFavourite(),
+  //       })
+  //     : "";
+  // }, [toggleFavourite]);
+
   useEffect(() => {
     console.log("banane");
-    hasClicked
-      ? navigation.setParams({
-          toggleFavourite: toggleFavourite(),
-        })
-      : "";
-  }, [toggleFavourite]);
+    // hasClicked
+    //   ?
+    navigation.setOptions({
+      headerTitle: comic.title,
+      headerRight: () => (
+        <HeaderButtons HeaderButtonComponent={HeaderComicsCustomButton}>
+          <Item
+            title="Preferiti"
+            iconName={isFav ? "md-star" : "md-star-outline"}
+            onPress={() => {
+              // navData.navigation.setParams({
+              //   isFavourite: !isFavourite,
+              //   isClicked: true,
+              // });
+              setIsFav(!isFav);
+              toggleFavourite();
+            }}
+          />
+        </HeaderButtons>
+      ),
+    });
+    // : "";
+  }, [toggleFavourite, isFav]);
 
   console.log("x", comic);
   console.log("store", store.getState());
@@ -75,31 +104,31 @@ export const ComicsDetailScreen: NavigationStackScreenComponent = ({
   );
 };
 
-ComicsDetailScreen.navigationOptions = (navData): StackHeaderOptions => {
-  const comic = navData.navigation.getParam("comic");
-  const isFavourite = navData.navigation.getParam("isFavourite");
-  // const toggleFavourite = navData.navigation.getParam("toggleFavourite");
-  console.log("if", isFavourite);
+// export const detailComicsScreenOptions = (navData: any): StackHeaderOptions => {
+//   // const comic = navData.navigation.getParam("comic");
+//   // const isFavourite = navData.navigation.getParam("isFavourite");
+//   // const toggleFavourite = navData.navigation.getParam("toggleFavourite");
+//   // console.log("if", isFavourite);
 
-  return {
-    headerTitle: comic.title,
-    headerRight: () => (
-      <HeaderButtons HeaderButtonComponent={HeaderComicsCustomButton}>
-        <Item
-          title="Preferiti"
-          iconName={isFavourite ? "md-star" : "md-star-outline"}
-          onPress={() => {
-            navData.navigation.setParams({
-              isFavourite: !isFavourite,
-              isClicked: true,
-            });
-            navData.navigation.getParam("toggleFavourite");
-          }}
-        />
-      </HeaderButtons>
-    ),
-  };
-};
+//   return {
+//     headerTitle: comic.title,
+//     // headerRight: () => (
+//     //   <HeaderButtons HeaderButtonComponent={HeaderComicsCustomButton}>
+//     //     <Item
+//     //       title="Preferiti"
+//     //       iconName={isFavourite ? "md-star" : "md-star-outline"}
+//     //       onPress={() => {
+//     //         navData.navigation.setParams({
+//     //           isFavourite: !isFavourite,
+//     //           isClicked: true,
+//     //         });
+//     //         navData.navigation.getParam("toggleFavourite");
+//     //       }}
+//     //     />
+//     //   </HeaderButtons>
+//     // ),
+//   };
+// };
 const styles = StyleSheet.create({
   start: {
     // margin: "30px",
