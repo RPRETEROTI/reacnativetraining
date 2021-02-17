@@ -59,7 +59,7 @@ export const Input: React.FC<any> = (props) => {
         style={styles.input}
         onBlur={willLoseFocus}
       >
-        <Text style={styles.descript}></Text>
+        {/* <Text style={styles.descript}></Text> */}
       </TextInput>
     </View>
   );

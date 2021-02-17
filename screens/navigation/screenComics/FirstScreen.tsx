@@ -41,7 +41,7 @@ export const FirstScreen = (props: any) => {
       }
       const remainingTime = actualExpDate.getTime() - new Date().getTime();
       // navigation.navigate("UserMenu");
-      dispatch(authenticate(token, userId, remainingTime));
+      dispatch(authenticate(token, userId, remainingTime, ""));
     };
     testLogin();
   }, [dispatch]);

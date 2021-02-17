@@ -81,71 +81,71 @@ export const logout = () => {
 //     type: LOGOUT
 // })
 
-const saveDataToStorage = (token: any, userId: any, expirationDate: Date) => {
+export const saveDataToStorage = (token: any, userId: any, expirationDate: Date) => {
     AsyncStorage.setItem('userData', JSON.stringify({
         token: token, userId: userId, expireData: expirationDate.toISOString()
     }))
 }
-export const signupAsynch = (credentials: AuthenticationType) => {
-    return async (dispatch: Dispatch<any>) => {
-        try {
-            const response = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyA6QFa_Gs4Yt13LNzkcjhf0XVkoCAWNYbU', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(
-                    {
-                        email: credentials.email,
-                        password: credentials.password,
-                        returnSecureToken: true
-                    }
-                )
-            })
-            const resData = await response.json();
-            console.log('resData', resData)
-            const expirationDate = new Date(
-                new Date().getTime() + parseInt(resData.expiresIn) * 1000
-            );
-            saveDataToStorage(resData.idToken, resData.localId, expirationDate)
-            // dispatch(signup(resData));
-            dispatch(authenticate(resData.idToken, resData.localId, parseInt(resData.expiresIn) * 1000, resData.email))
-        }
-        catch (err) {
-            console.log('the winner is', err)
-        }
-    }
-}
+// export const signupAsynch = (credentials: AuthenticationType) => {
+//     return async (dispatch: Dispatch<any>) => {
+//         try {
+//             const response = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyA6QFa_Gs4Yt13LNzkcjhf0XVkoCAWNYbU', {
+//                 method: 'POST',
+//                 headers: {
+//                     'Content-Type': 'application/json'
+//                 },
+//                 body: JSON.stringify(
+//                     {
+//                         email: credentials.email,
+//                         password: credentials.password,
+//                         returnSecureToken: true
+//                     }
+//                 )
+//             })
+//             const resData = await response.json();
+//             console.log('resData', resData)
+//             const expirationDate = new Date(
+//                 new Date().getTime() + parseInt(resData.expiresIn) * 1000
+//             );
+//             saveDataToStorage(resData.idToken, resData.localId, expirationDate)
+//             // dispatch(signup(resData));
+//             dispatch(authenticate(resData.idToken, resData.localId, parseInt(resData.expiresIn) * 1000, resData.email))
+//         }
+//         catch (err) {
+//             console.log('the winner is', err)
+//         }
+//     }
+// }
 
-export const loginAsynch = (credentials: AuthenticationType) => {
-    return async (dispatch: Dispatch<any>) => {
-        try {
-            const response = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyA6QFa_Gs4Yt13LNzkcjhf0XVkoCAWNYbU', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(
-                    {
-                        email: credentials.email,
-                        password: credentials.password,
-                        returnSecureToken: true
-                    }
-                )
-            })
-            const resData = await response.json();
-            console.log('resDataLogin', resData)
-            const expirationDate = new Date(
-                new Date().getTime() + parseInt(resData.expiresIn) * 1000
-            );
-            saveDataToStorage(resData.idToken, resData.localId, expirationDate)
-            // dispatch(login(resData));
-            dispatch(authenticate(resData.idToken, resData.localId, parseInt(resData.expiresIn) * 1000, resData.email))
+// export const loginAsynch = (credentials: AuthenticationType) => {
+//     return async (dispatch: Dispatch<any>) => {
+//         try {
+//             const response = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyA6QFa_Gs4Yt13LNzkcjhf0XVkoCAWNYbU', {
+//                 method: 'POST',
+//                 headers: {
+//                     'Content-Type': 'application/json'
+//                 },
+//                 body: JSON.stringify(
+//                     {
+//                         email: credentials.email,
+//                         password: credentials.password,
+//                         returnSecureToken: true
+//                     }
+//                 )
+//             })
+//             const resData = await response.json();
+//             console.log('resDataLogin', resData)
+//             const expirationDate = new Date(
+//                 new Date().getTime() + parseInt(resData.expiresIn) * 1000
+//             );
+//             saveDataToStorage(resData.idToken, resData.localId, expirationDate)
+//             // dispatch(login(resData));
+//             dispatch(authenticate(resData.idToken, resData.localId, parseInt(resData.expiresIn) * 1000, resData.email))
 
-        }
-        catch (err) {
-            console.log('the winner is', err)
-        }
-    }
-}
+//         }
+//         catch (err) {
+//             console.log('the winner is', err)
+//         }
+//     }
+// }
 

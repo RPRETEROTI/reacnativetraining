@@ -48,8 +48,8 @@ export const AppNavigationContainer: React.FC<any> = () => {
   return (
     <NavigationContainer>
       {isAuth && (isAdmin ? <AdminSideNavigator /> : <UserSideNavigator />)}
-      {!isAuth && isStartState && <AuthenticationNavigator />}
-      {!isAuth && !isStartState && <FirstScreen />}
+      {!isAuth && <AuthenticationNavigator />}
+      {/* {!isAuth && !isStartState && <FirstScreen />} */}
 
       {/* {isAuth && isAdmin && <UserSideNavigator />} */}
     </NavigationContainer>

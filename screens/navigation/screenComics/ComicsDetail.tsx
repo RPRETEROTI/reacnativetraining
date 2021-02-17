@@ -9,7 +9,7 @@ import {
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
 import { StackHeaderOptions } from "react-navigation-stack/lib/typescript/src/vendor/types";
-import { useDispatch } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { HeaderComicsCustomButton } from "../../../components_Comics/HeaderCustomButton";
 import {
   editComic,
@@ -17,12 +17,12 @@ import {
   editComics,
   togglePreferites,
 } from "../../../store/actions/shop";
-import { store } from "../../../store/store";
+import { RootState, store } from "../../../store/store";
 import { Input } from "../../../components_Comics/Input";
 import { FORMEDITPRODUCT } from "../../../store/types/types";
 import { formReducer } from "../../../utilities/formReducer";
 
-export const ComicsDetailScreen = ({ ...props }) => {
+export const ComicsDetailScreenConnect = ({ ...props }) => {
   const { navigation, route } = props;
   console.log("nav", navigation);
   // const comic = navigation.getParam("comic");
@@ -36,7 +36,7 @@ export const ComicsDetailScreen = ({ ...props }) => {
   console.log("comic", comic);
   // console.log("isSubmitted", isSubmittedComic);
   console.log("store", store.getState());
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const [formState, dispatchFormState] = useReducer(formReducer, {
     inputs: {
       description: comic.description,
@@ -70,14 +70,18 @@ export const ComicsDetailScreen = ({ ...props }) => {
     }
     try {
       console.log("kiwi");
-      await dispatch(editComics(formState.inputs));
+      // await dispatch(editComics(formState.inputs));
+      await editComics(formState.inputs);
+
       // navigation.goBack();
     } catch (err) {
       {
         console.log("err", err);
       }
     }
-  }, [dispatch, formState]);
+  }, [formState]);
+
+  // }, [dispatch, formState]);
 
   // useEffect(() => {
   //   hasClicked
@@ -192,6 +196,16 @@ export const ComicsDetailScreen = ({ ...props }) => {
     </View>
   );
 };
+
+const mapStateToProps = (state: RootState) => ({
+  initialValue: state.shop,
+});
+const actionsToDispatch = { editComic, editComics };
+const ComicsDetailScreen = connect(
+  mapStateToProps,
+  actionsToDispatch
+)(ComicsDetailScreenConnect as any);
+export default ComicsDetailScreen;
 
 export const detailComicAdminScreenOptions = (
   navData: any

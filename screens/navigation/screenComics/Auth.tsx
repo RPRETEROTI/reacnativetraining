@@ -12,11 +12,15 @@ import { NavigationStackScreenComponent } from "react-navigation-stack";
 import { useDispatch } from "react-redux";
 import { Input } from "../../../components_Comics/Input";
 import {
-  loginAsynch,
-  signup,
-  signupAsynch,
+  // loginAsynch,
+  // signup,
+  // signupAsynch,
   validateCredentials,
 } from "../../../store/actions/auth";
+import {
+  loginroutine,
+  signuproutine,
+} from "../../../store/sagas/authentication";
 import { formReducer } from "../../../utilities/formReducer";
 
 export const AuthScreen: NavigationStackScreenComponent = ({ ...props }) => {
@@ -54,9 +58,11 @@ export const AuthScreen: NavigationStackScreenComponent = ({ ...props }) => {
     try {
       console.log("kiwi");
       if (login) {
-        await dispatch(loginAsynch(formState.inputs));
+        // await dispatch(loginAsynch(formState.inputs));
+        await dispatch(loginroutine.request(formState.inputs));
       } else {
-        await dispatch(signupAsynch(formState.inputs));
+        // await dispatch(signupAsynch(formState.inputs));
+        await dispatch(signuproutine.request(formState.inputs));
       }
       // navigation.navigate("Home");
     } catch (err) {
